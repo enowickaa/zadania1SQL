@@ -1,0 +1,43 @@
+-- 1. Stwórz bazę danych
+CREATE DATABASE Biblioteka;
+USE Biblioteka;
+
+-- 2. Stwórz tabelę Biblioteczka
+CREATE TABLE Biblioteczka (
+    ID INT PRIMARY KEY,
+    Tytul TEXT NOT NULL,
+    Data_zakupu DATE NOT NULL
+);
+
+-- 3. Dodaj książkę o Twoim ulubionym tytule
+INSERT INTO Biblioteczka (ID, Tytul, Data_zakupu)
+VALUES (1, 'Harry Potter i Kamień Filozoficzny', '2025-06-01');
+
+-- 4. Sprawdź, czy książka została dodana
+SELECT * FROM Biblioteczka;
+
+-- 5. Dodaj kolejne dwie ulubione książki
+INSERT INTO Biblioteczka (ID, Tytul, Data_zakupu)
+VALUES 
+(2, 'Władca Pierścieni: Drużyna Pierścienia', '2025-06-02'),
+(3, 'Hobbit', '2025-06-03');
+
+-- 6. Zmień ulubioną książkę na książkę, która najmniej Ci się podoba
+UPDATE Biblioteczka
+SET Tytul = 'Najmniej lubiana książka'
+WHERE ID = 1;
+
+-- 7. Dodaj nową kolumnę Autor
+ALTER TABLE Biblioteczka
+ADD COLUMN Autor TEXT;
+
+-- 8. Uzupełnij kolumnę Autor danymi
+UPDATE Biblioteczka SET Autor = 'J.K. Rowling' WHERE ID = 1;
+UPDATE Biblioteczka SET Autor = 'J.R.R. Tolkien' WHERE ID = 2;
+UPDATE Biblioteczka SET Autor = 'J.R.R. Tolkien' WHERE ID = 3;
+
+-- 9. Usuń pozycje z ulubionymi książkami (przyjmijmy, że ID = 2 i ID = 3 to były ulubione)
+DELETE FROM Biblioteczka WHERE ID IN (2, 3);
+
+-- 10. Wyświetl dane autora dla pozycji, która została w bazie
+SELECT Autor FROM Biblioteczka;
