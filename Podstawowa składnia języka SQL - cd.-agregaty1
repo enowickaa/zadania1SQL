@@ -1,0 +1,79 @@
+-- Agregaty - Zadanie 1
+
+-- a. Policz, ile jest rekordów w tabeli (po id).
+SELECT COUNT(id) AS LiczbaRekordow FROM batman;
+
+-- b. Policz, ile jest rekordów z wiekiem.
+SELECT COUNT(age) AS LiczbaRekordowZWiekem FROM batman;
+
+-- c. Ilu mężczyzn ma więcej niż 40 lat?
+SELECT COUNT(id) AS LiczbaMezczyznPowyzej40Lat
+FROM batman
+WHERE sex = 'M' AND age > 40;
+
+-- d. Oblicz sumę wszystkich cen.
+SELECT SUM(price) AS SumaWszystkichCen FROM batman;
+
+-- e. Oblicz łączny wiek kobiet.
+SELECT SUM(age) AS LaczyWiekKobiet
+FROM batman
+WHERE sex = 'F';
+
+-- f. Podaj łączną wartość komputera i okna.
+SELECT SUM(price) AS LaczaWartoscKomputeraIOkna
+FROM batman
+WHERE gift IN ('komputer', 'okno');
+
+-- g. Podaj maksymalną cenę.
+SELECT MAX(price) AS MaksymalnaCena FROM batman;
+
+-- h. Podaj najpóźniejszą datę
+SELECT MAX(start_date) AS NajpozniejszaData FROM batman;
+
+-- i. Podaj nazwisko rozpoczynające się literą, która jest najbliżej końca alfabetu
+-- (Zakładamy, że chcemy znaleźć nazwisko, którego pierwsza litera jest najbliżej 'Z')
+SELECT last_name
+FROM batman
+ORDER BY SUBSTRING(last_name, 1, 1) DESC
+LIMIT 1;
+
+-- j. Podaj minimalną cenę.
+SELECT MIN(price) AS MinimalnaCena FROM batman;
+
+-- k. Podaj najwcześniejszą datę
+SELECT MIN(start_date) AS NajwczesniejszaData FROM batman;
+
+-- l. Podaj nazwisko rozpoczynające się literą, która jest najbliżej początku alfabetu
+-- (Zakładamy, że chcemy znaleźć nazwisko, którego pierwsza litera jest najbliżej 'A')
+SELECT last_name
+FROM batman
+ORDER BY SUBSTRING(last_name, 1, 1) ASC
+LIMIT 1;
+
+-- m. Jednocześnie podaj cenę minimalną oraz maksymalną. Nadaj odpowiednie aliasy.
+SELECT
+    MIN(price) AS CenaMinimalna,
+    MAX(price) AS CenaMaksymalna
+FROM batman;
+
+-- n. Oblicz różnicę pomiędzy ceną maksymalną, a minimalną.
+SELECT
+    MAX(price) - MIN(price) AS RoznicaCen
+FROM batman;
+
+-- o. Oblicz średnią wieku.
+SELECT AVG(age) AS SredniaWieku FROM batman;
+
+-- p. Oblicz średnią wieku za pomocą COUNT oraz SUM.
+SELECT SUM(age) / COUNT(age) AS SredniaWiekuObliczonaRecznie FROM batman;
+
+-- q. Oblicz średni wiek dla kobiet oraz średni wiek dla mężczyzn.
+SELECT
+    sex,
+    AVG(age) AS SredniaWieku
+FROM
+    batman
+WHERE
+    sex IS NOT NULL
+GROUP BY
+    sex;
