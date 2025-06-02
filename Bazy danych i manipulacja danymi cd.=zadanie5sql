@@ -1,0 +1,40 @@
+-- 1. Stwórz bazę danych Pracownicy (lub użyj istniejącej)
+CREATE DATABASE IF NOT EXISTS Pracownicy;
+USE Pracownicy;
+
+-- 2. Stwórz tabelę Pracownicy z odpowiednimi constraints
+DROP TABLE IF EXISTS Pracownicy;
+CREATE TABLE Pracownicy (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Imie VARCHAR(50),
+    Nazwisko VARCHAR(50) NOT NULL,
+    Wiek INT CHECK (Wiek >= 0),
+    Kurs VARCHAR(50)
+);
+
+-- 3. Wprowadź dane z pliku
+INSERT INTO Pracownicy (ID, Imie, Nazwisko, Wiek, Kurs) VALUES
+(1, 'Anna', 'NOWAK', 34, 'DS.'),
+(2, 'Roman', 'KOWALSKI', 42, 'DS.'),
+(3, 'Tomasz', 'WIŚNIEWSKI', 33, 'DS.'),
+(4, 'Anna', NULL, 43, 'DS.'),
+(5, 'Michał', 'KOWALIK', 38, 'DS.'),
+(6, 'Katarzyna', 'KAMIŃSKA', 27, 'DS.'),
+(7, 'Kamil', 'KOWALCZYK', NULL, 'Java'),
+(8, 'Monika', 'KOZŁOWSKI', NULL, 'Python');
+
+-- 4. Wyświetl listę pracowników wg kolumny Imię, eliminując powtarzające się pozycje
+SELECT DISTINCT Imie FROM Pracownicy
+WHERE Imie IS NOT NULL;
+
+-- 5. Wyświetl listę pracowników wg kolumny Nazwisko eliminując powtarzające się pozycje
+SELECT DISTINCT Nazwisko FROM Pracownicy
+WHERE Nazwisko IS NOT NULL;
+
+-- 6. Wyświetl kursy prowadzone przez pracowników o Nazwisku: „Kowalczyk”
+SELECT DISTINCT Kurs FROM Pracownicy
+WHERE Nazwisko = 'KOWALCZYK';
+
+-- 7. Wyświetl listę pracowników, dla których nie znamy wieku
+SELECT * FROM Pracownicy
+WHERE Wiek IS NULL;
