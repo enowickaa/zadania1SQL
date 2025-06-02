@@ -1,0 +1,49 @@
+-- 1. Stwórz Bazę Pracownicy
+CREATE DATABASE Pracownicy;
+USE Pracownicy;
+
+-- 2. Stwórz Tabelę Pracownicy z odpowiednimi constraints
+CREATE TABLE Pracownicy (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Imie VARCHAR(50) NOT NULL,
+    Nazwisko VARCHAR(50) NOT NULL,
+    Wiek INT NOT NULL CHECK (Wiek > 0),
+    Kurs VARCHAR(50) NOT NULL
+);
+
+-- 3. Wprowadź dane z pliku
+INSERT INTO Pracownicy (ID, Imie, Nazwisko, Wiek, Kurs) VALUES
+(1, 'Anna', 'NOWAK', 34, 'DS.'),
+(2, 'Roman', 'KOWALSKI', 42, 'DS.'),
+(3, 'Tomasz', 'WIŚNIEWSKI', 33, 'DS.'),
+(4, 'Agata', 'WÓJCIK', 43, 'DS.'),
+(5, 'Michał', 'KOWALIK', 38, 'DS.'),
+(6, 'Katarzyna', 'KAMIŃSKA', 27, 'DS.'),
+(7, 'Piotr', 'KACZMAREK', 25, 'DS.'),
+(8, 'Ewa', 'KURSKI', 41, 'DS.'),
+(9, 'Marcin', 'KRAWIECKI', 29, 'DS.'),
+(10, 'Monika', 'KOZŁOWSKI', 36, 'DS.');
+
+-- 4. Wyświetl listę pracowników starszych niż 30 lat
+SELECT * FROM Pracownicy
+WHERE Wiek > 30;
+
+-- 5. Wyświetl listę pracowników młodszych niż 30 lat
+SELECT * FROM Pracownicy
+WHERE Wiek < 30;
+
+-- 6. Wyświetl pracowników, których nazwisko zaczyna się na „K” i kończy na „ki”
+SELECT * FROM Pracownicy
+WHERE Nazwisko LIKE 'K%ki';
+
+-- 7. Zmień nazwę kolumny „ID” na „NR”
+ALTER TABLE Pracownicy
+CHANGE COLUMN ID NR INT PRIMARY KEY AUTO_INCREMENT;
+
+-- 8. Wyświetl pozycje, w których są puste pola
+SELECT * FROM Pracownicy
+WHERE Imie IS NULL OR Nazwisko IS NULL OR Wiek IS NULL OR Kurs IS NULL;
+
+-- 9. Wyświetl wszystkich pracowników z kursu „Java”
+SELECT * FROM Pracownicy
+WHERE Kurs = 'Java';
