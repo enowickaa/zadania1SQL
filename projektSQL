@@ -1,0 +1,187 @@
+-- 1. Stwórz Baze
+CREATE DATABASE SklepOdziezowy;
+USE SklepOdziezowy;
+
+-- 2. Tabela Producenci
+CREATE TABLE Producenci (
+    id_producenta INT PRIMARY KEY AUTO_INCREMENT,
+    nazwa_producenta VARCHAR(100) NOT NULL UNIQUE,
+    adres_producenta VARCHAR(255) NOT NULL,
+    nip_producenta CHAR(10) NOT NULL UNIQUE,
+    data_podpisania_umowy DATE NOT NULL
+);
+
+-- 3. Tabela Produkty
+CREATE TABLE Produkty (
+    id_produktu INT PRIMARY KEY AUTO_INCREMENT,
+    id_producenta INT NOT NULL,
+    nazwa_produktu VARCHAR(100) NOT NULL,
+    opis_produktu TEXT,
+    cena_netto_zakupu DECIMAL(10,2) NOT NULL CHECK (cena_netto_zakupu >= 0),
+    cena_brutto_zakupu DECIMAL(10,2) NOT NULL CHECK (cena_brutto_zakupu >= 0),
+    cena_netto_sprzedazy DECIMAL(10,2) NOT NULL CHECK (cena_netto_sprzedazy >= 0),
+    cena_brutto_sprzedazy DECIMAL(10,2) NOT NULL CHECK (cena_brutto_sprzedazy >= 0),
+    procent_vat_sprzedazy DECIMAL(5,2) NOT NULL CHECK (procent_vat_sprzedazy >= 0),
+    FOREIGN KEY (id_producenta) REFERENCES Producenci(id_producenta)
+);
+
+-- 4. Tabela Klienci
+CREATE TABLE Klienci (
+    id_klienta INT PRIMARY KEY AUTO_INCREMENT,
+    imie VARCHAR(50) NOT NULL,
+    nazwisko VARCHAR(50) NOT NULL,
+    adres VARCHAR(255) NOT NULL
+);
+
+-- 5. Tabela Zamowienia
+CREATE TABLE Zamowienia (
+    id_zamowienia INT PRIMARY KEY AUTO_INCREMENT,
+    id_klienta INT NOT NULL,
+    id_produktu INT NOT NULL,
+    data_zamowienia DATE NOT NULL,
+    FOREIGN KEY (id_klienta) REFERENCES Klienci(id_klienta),
+    FOREIGN KEY (id_produktu) REFERENCES Produkty(id_produktu)
+);
+
+-- 6. Wstaw dane
+-- Producenci
+INSERT INTO Producenci (nazwa_producenta, adres_producenta, nip_producenta, data_podpisania_umowy) VALUES
+('Producent A', 'ul. Kwiatowa 1', '1234567890', '2024-01-01'),
+('Producent B', 'ul. Lipowa 2', '0987654321', '2024-02-01'),
+('Producent C', 'ul. Długa 3', '1112223334', '2024-03-01'),
+('Producent D', 'ul. Krótka 4', '5556667778', '2024-04-01');
+
+-- Klienci
+INSERT INTO Klienci (imie, nazwisko, adres) VALUES
+('Jan', 'Kowalski', 'ul. Polna 5'),
+('Anna', 'Nowak', 'ul. Leśna 6'),
+('Piotr', 'Wiśniewski', 'ul. Łąkowa 7'),
+('Maria', 'Wójcik', 'ul. Brzozowa 8'),
+('Katarzyna', 'Krawczyk', 'ul. Jesionowa 9'),
+('Paweł', 'Kowalczyk', 'ul. Dębowa 10'),
+('Tomasz', 'Kamiński', 'ul. Sosnowa 11'),
+('Agnieszka', 'Lewandowska', 'ul. Klonowa 12'),
+('Michał', 'Zieliński', 'ul. Topolowa 13'),
+('Magdalena', 'Szymańska', 'ul. Wiśniowa 14');
+
+-- Produkty
+INSERT INTO Produkty (id_producenta, nazwa_produktu, opis_produktu, cena_netto_zakupu, cena_brutto_zakupu, cena_netto_sprzedazy, cena_brutto_sprzedazy, procent_vat_sprzedazy) VALUES
+(1, 'Koszulka', 'Biała koszulka bawełniana', 20.00, 24.60, 30.00, 36.90, 23.00),
+(1, 'Spodnie', 'Jeansy klasyczne', 50.00, 61.50, 80.00, 98.40, 23.00),
+(1, 'Bluza', 'Bluza sportowa', 40.00, 49.20, 70.00, 86.10, 23.00),
+(1, 'Kurtka', 'Kurtka zimowa', 100.00, 123.00, 150.00, 184.50, 23.00),
+(2, 'Sukienka', 'Letnia sukienka', 60.00, 73.80, 90.00, 110.70, 23.00),
+(2, 'Koszula', 'Elegancka koszula', 35.00, 43.05, 55.00, 67.65, 23.00),
+(2, 'Marynarka', 'Marynarka elegancka', 80.00, 98.40, 120.00, 147.60, 23.00),
+(2, 'T-shirt', 'Kolorowy T-shirt', 25.00, 30.75, 40.00, 49.20, 23.00),
+(3, 'Sweter', 'Sweter wełniany', 45.00, 55.35, 70.00, 86.10, 23.00),
+(3, 'Golf', 'Ciepły golf', 55.00, 67.65, 85.00, 104.55, 23.00),
+(3, 'Kamizelka', 'Kamizelka pikowana', 35.00, 43.05, 60.00, 73.80, 23.00),
+(3, 'Płaszcz', 'Płaszcz zimowy', 120.00, 147.60, 180.00, 221.40, 23.00),
+(4, 'Spódnica', 'Spódnica jeansowa', 30.00, 36.90, 50.00, 61.50, 23.00),
+(4, 'Szorty', 'Krótkie spodenki', 20.00, 24.60, 35.00, 43.05, 23.00),
+(4, 'Legginsy', 'Legginsy sportowe', 25.00, 30.75, 45.00, 55.35, 23.00),
+(4, 'Kapelusz', 'Kapelusz letni', 15.00, 18.45, 25.00, 30.75, 23.00),
+(1, 'Pasek', 'Skórzany pasek', 18.00, 22.14, 30.00, 36.90, 23.00),
+(1, 'Czapka', 'Czapka zimowa', 12.00, 14.76, 20.00, 24.60, 23.00),
+(2, 'Krawat', 'Krawat jedwabny', 22.00, 27.06, 35.00, 43.05, 23.00),
+(3, 'Buty', 'Buty sportowe', 70.00, 86.10, 110.00, 135.30, 23.00);
+
+-- Zamowienia
+INSERT INTO Zamowienia (id_klienta, id_produktu, data_zamowienia) VALUES
+(1, 1, '2025-05-01'),
+(2, 2, '2025-05-02'),
+(3, 3, '2025-05-03'),
+(4, 4, '2025-05-04'),
+(5, 5, '2025-05-05'),
+(6, 6, '2025-05-06'),
+(7, 7, '2025-05-07'),
+(8, 8, '2025-05-08'),
+(9, 9, '2025-05-09'),
+(10, 10, '2025-05-10');
+
+-- 8. Produkty producenta 1
+SELECT p.*, pr.*
+FROM Produkty p
+JOIN Producenci pr ON p.id_producenta = pr.id_producenta
+WHERE p.id_producenta = 1;
+
+-- 9. Posortowane alfabetycznie
+SELECT p.*, pr.*
+FROM Produkty p
+JOIN Producenci pr ON p.id_producenta = pr.id_producenta
+WHERE p.id_producenta = 1
+ORDER BY p.nazwa_produktu;
+
+-- 10. Średnia cena brutto sprzedaży
+SELECT AVG(p.cena_brutto_sprzedazy) AS srednia_cena
+FROM Produkty p
+WHERE p.id_producenta = 1;
+
+-- 11. Podział na Tanie/Drogie (medianowo)
+SELECT
+    p.nazwa_produktu,
+    CASE
+        WHEN p.cena_brutto_sprzedazy <= (
+            SELECT MAX(cena_brutto_sprzedazy)
+            FROM (
+                SELECT p2.cena_brutto_sprzedazy
+                FROM Produkty p2
+                WHERE p2.id_producenta = 1
+                ORDER BY p2.cena_brutto_sprzedazy
+                LIMIT (SELECT COUNT(*)/2 FROM Produkty WHERE id_producenta = 1)
+            ) AS Polowa
+        )
+        THEN 'Tanie'
+        ELSE 'Drogie'
+    END AS grupa
+FROM Produkty p
+WHERE p.id_producenta = 1
+ORDER BY p.cena_brutto_sprzedazy;
+
+-- 12. Nazwy zamówionych produktów
+SELECT DISTINCT p.nazwa_produktu
+FROM Zamowienia z
+JOIN Produkty p ON z.id_produktu = p.id_produktu;
+
+-- 13. Ogranicz do 5
+SELECT DISTINCT p.nazwa_produktu
+FROM Zamowienia z
+JOIN Produkty p ON z.id_produktu = p.id_produktu
+LIMIT 5;
+
+-- 14. Łączna wartość zamówień
+SELECT SUM(p.cena_brutto_sprzedazy) AS laczna_wartosc
+FROM Zamowienia z
+JOIN Produkty p ON z.id_produktu = p.id_produktu;
+
+-- 15. Wszystkie zamówienia z nazwą produktu
+SELECT z.id_zamowienia, z.data_zamowienia, p.nazwa_produktu
+FROM Zamowienia z
+JOIN Produkty p ON z.id_produktu = p.id_produktu
+ORDER BY z.data_zamowienia ASC;
+
+-- 16. Produkty z brakami danych
+SELECT *
+FROM Produkty
+WHERE nazwa_produktu IS NULL
+   OR cena_netto_zakupu IS NULL
+   OR cena_brutto_zakupu IS NULL
+   OR cena_netto_sprzedazy IS NULL
+   OR cena_brutto_sprzedazy IS NULL
+   OR procent_vat_sprzedazy IS NULL;
+
+-- 17. Najczęściej sprzedawany produkt
+SELECT p.nazwa_produktu, p.cena_brutto_sprzedazy, COUNT(z.id_produktu) AS liczba_sprzedazy
+FROM Zamowienia z
+JOIN Produkty p ON z.id_produktu = p.id_produktu
+GROUP BY p.id_produktu
+ORDER BY liczba_sprzedazy DESC
+LIMIT 1;
+
+-- 18. Dzień z największą liczbą zamówień
+SELECT data_zamowienia, COUNT(*) AS liczba_zamowien
+FROM Zamowienia
+GROUP BY data_zamowienia
+ORDER BY liczba_zamowien DESC
+LIMIT 1;
