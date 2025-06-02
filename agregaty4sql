@@ -1,0 +1,27 @@
+-- a. Rozłóż datę pokazaną w kolumnie start_date na trzy kolumny: rok, miesiąc, dzień.
+SELECT
+    strftime('%Y', start_date) AS rok,
+    strftime('%m', start_date) AS miesiac,
+    strftime('%d', start_date) AS dzien
+FROM batman;
+
+-- b. Wyświetl kolumnę start_date oraz kolumnę final_date, która wyświetli datę o 3 dni późniejszą, niż data w start_date.
+SELECT
+    start_date,
+    date(start_date, '+3 days') AS final_date
+FROM batman;
+
+-- c. Wyświetl dzisiejszą datę.
+SELECT date('now') AS dzisiejsza_data;
+
+-- d. Wyświetl nazwę obecnego miesiąca.
+SELECT strftime('%B', 'now') AS obecny_miesiac;
+
+-- e. Wyświetl start_date, a następnie kolumny określające: numer tygodnia, nazwę miesiąca, kwartał, numer dnia w roku.
+SELECT
+    start_date,
+    strftime('%W', start_date) AS numer_tygodnia,
+    strftime('%B', start_date) AS nazwa_miesiaca,
+    strftime('%q', start_date) AS kwartal,
+    strftime('%j', start_date) AS numer_dnia_w_roku
+FROM batman;
