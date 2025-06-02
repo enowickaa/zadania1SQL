@@ -1,0 +1,50 @@
+-- 1. Stwórz bazę danych Pracownicy (lub użyj istniejącej)
+CREATE DATABASE IF NOT EXISTS Pracownicy;
+USE Pracownicy;
+
+-- 2. Stwórz tabelę Pracownicy z odpowiednimi constraints
+DROP TABLE IF EXISTS Pracownicy;
+CREATE TABLE Pracownicy (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Imie VARCHAR(50) NOT NULL,
+    Nazwisko VARCHAR(50) NOT NULL,
+    Wiek INT NOT NULL CHECK (Wiek > 0),
+    Kurs VARCHAR(50)
+);
+
+-- 3. Wprowadź dane z pliku
+INSERT INTO Pracownicy (ID, Imie, Nazwisko, Wiek, Kurs) VALUES
+(1, 'Anna', 'NOWAK', 34, 'DS.'),
+(2, 'Roman', 'KOWALSKI', 42, 'DS.'),
+(3, 'Tomasz', 'WIŚNIEWSKI', 33, 'DS.'),
+(4, 'Agata', 'WÓJCIK', 43, 'DS.'),
+(5, 'Michał', 'KOWALIK', 38, 'DS.'),
+(6, 'Katarzyna', 'KAMIŃSKA', 27, 'DS.'),
+(7, 'Piotr', 'KOWALCZYK', 30, NULL),
+(8, 'Ewa', 'KOWALCZYK', 36, 'Java'),
+(9, 'Marcin', 'KRAWIECKI', 40, NULL),
+(10, 'Monika', 'KOZŁOWSKI', 29, 'Python');
+
+-- 4. Wyświetl listę pracowników o Nazwisku: KOWALCZYK
+SELECT * FROM Pracownicy
+WHERE Nazwisko = 'KOWALCZYK';
+
+-- 5. Wyświetl listę pracowników w wieku od 30 do 40 lat
+SELECT * FROM Pracownicy
+WHERE Wiek BETWEEN 30 AND 40;
+
+-- 6. Wyświetl listę pracowników, których nazwisko nie zawiera „and”
+SELECT * FROM Pracownicy
+WHERE Nazwisko NOT LIKE '%and%';
+
+-- 7. Wyświetl listę pracowników z ID od 1 do 7
+SELECT * FROM Pracownicy
+WHERE ID BETWEEN 1 AND 7;
+
+-- 8. Wyświetl listę pracowników z brakującymi danymi
+SELECT * FROM Pracownicy
+WHERE Imie IS NULL OR Nazwisko IS NULL OR Wiek IS NULL OR Kurs IS NULL;
+
+-- 9. Wyświetl wszystkich pracowników, którzy nie prowadzą żadnego kursu
+SELECT * FROM Pracownicy
+WHERE Kurs IS NULL OR Kurs = '';
