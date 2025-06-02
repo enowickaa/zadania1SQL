@@ -1,0 +1,50 @@
+-- 1. Załóż bazę danych
+CREATE DATABASE Lista_Prezentow;
+USE Lista_Prezentow;
+
+-- 2. Załóż tabelę Prezenty_2020
+CREATE TABLE Prezenty_2020 (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Imie_obdarowanego VARCHAR(50) NOT NULL,
+    Pomysl_na_prezent VARCHAR(100) NOT NULL,
+    Cena DECIMAL(10,2) NOT NULL,
+    Miejsce_zakupu VARCHAR(100) NOT NULL
+);
+
+-- 3. Wprowadź dane osób (minimum 5)
+INSERT INTO Prezenty_2020 (Imie_obdarowanego, Pomysl_na_prezent, Cena, Miejsce_zakupu)
+VALUES
+('Anna', 'Książka', 50.00, 'Empik'),
+('Piotr', 'Perfumy', 120.00, 'Sephora'),
+('Magda', 'Zegarek', 300.00, 'Galeria Handlowa'),
+('Kamil', 'Słuchawki', 200.00, 'Media Markt'),
+('Monika', 'Portfel', 80.00, 'CCC');
+
+-- 4. Sprawdź wszystkie dane
+SELECT * FROM Prezenty_2020;
+
+-- 5. Zmień pomysł na prezent dla osoby z pozycji 3
+UPDATE Prezenty_2020
+SET Pomysl_na_prezent = 'Rower'
+WHERE ID = 3;
+
+-- 6. Sprawdź dane tylko dla pozycji 3
+SELECT * FROM Prezenty_2020
+WHERE ID = 3;
+
+-- 7. Usuń pozycję 1
+DELETE FROM Prezenty_2020
+WHERE ID = 1;
+
+-- 8. Sprawdź wszystkie pozycje
+SELECT * FROM Prezenty_2020;
+
+-- 9. Usuń kolumnę Miejsce_zakupu
+ALTER TABLE Prezenty_2020
+DROP COLUMN Miejsce_zakupu;
+
+-- 10. Wyświetl imiona obdarowanych dla pozycji 3,4,5
+-- (Uwaga: po usunięciu rekordu 1, ID 3,4,5 mogą nadal istnieć — sprawdzamy faktyczne ID)
+SELECT ID, Imie_obdarowanego
+FROM Prezenty_2020
+WHERE ID IN (3,4,5);
