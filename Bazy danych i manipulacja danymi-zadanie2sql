@@ -1,0 +1,61 @@
+-- 1. Załóż bazę danych
+CREATE DATABASE School_Coding;
+USE School_Coding;
+
+-- 2. Załóż tabelę Mentors
+CREATE TABLE Mentors (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    Imie VARCHAR(50) NOT NULL,
+    Nazwisko VARCHAR(50) NOT NULL,
+    Specjalizacja VARCHAR(100) NOT NULL,
+    Data_zatrudnienia DATE NOT NULL,
+    Data_zwolnienia DATE NOT NULL
+);
+
+-- 3. Wprowadź dane (10 pozycji)
+INSERT INTO Mentors (Imie, Nazwisko, Specjalizacja, Data_zatrudnienia, Data_zwolnienia)
+VALUES
+('Anna', 'Kowalska', 'Frontend', '2022-01-15', '2023-01-15'),
+('Piotr', 'Nowak', 'Backend', '2021-02-20', '2024-02-20'),
+('Maria', 'Wiśniewska', 'Fullstack', '2023-03-10', '2024-03-10'),
+('Tomasz', 'Zieliński', 'Data Science', '2020-04-05', '2024-04-05'),
+('Ewa', 'Wójcik', 'DevOps', '2019-05-01', '2023-05-01'),
+('Kamil', 'Kamiński', 'Mobile', '2022-06-12', '2025-06-12'),
+('Monika', 'Lewandowska', 'AI', '2021-07-08', '2024-07-08'),
+('Łukasz', 'Dąbrowski', 'Cybersecurity', '2020-08-15', '2025-08-15'),
+('Karolina', 'Szymańska', 'QA', '2023-09-20', '2026-09-20'),
+('Michał', 'Krawczyk', 'Cloud', '2021-10-30', '2024-10-30');
+
+-- 4. Sprawdź, czy wszystkie dane się wyświetlają
+SELECT * FROM Mentors;
+
+-- 5. Zmień Nazwisko mentora w pozycji nr 5
+UPDATE Mentors
+SET Nazwisko = 'Kowalczyk'
+WHERE ID = 5;
+
+-- 6. Sprawdź zmianę nazwiska w pozycji 5
+SELECT * FROM Mentors
+WHERE ID = 5;
+
+-- 7. Zmień specjalizację mentora w pozycji 9
+UPDATE Mentors
+SET Specjalizacja = 'Automation'
+WHERE ID = 9;
+
+-- 8. Sprawdź zmianę specjalizacji w pozycji 9
+SELECT * FROM Mentors
+WHERE ID = 9;
+
+-- 9. Dodaj kolumnę Wynagrodzenie (przykładowo: DECIMAL(10,2) NOT NULL DEFAULT 0)
+ALTER TABLE Mentors
+ADD COLUMN Wynagrodzenie DECIMAL(10,2) NOT NULL DEFAULT 0;
+
+-- 10. Uzupełnij kolumnę Wynagrodzenie wartością 1000 dla pozycji 1, 2, 3
+UPDATE Mentors
+SET Wynagrodzenie = 1000
+WHERE ID IN (1, 2, 3);
+
+-- 11. Wyświetl pozycje 1,2,3 i sprawdź dane
+SELECT * FROM Mentors
+WHERE ID IN (1, 2, 3);
